@@ -37,4 +37,51 @@ export const commonStyles = StyleSheet.create({
     fontSize: Typography.fontSizes.s,
     fontWeight: "bold",
   },
+
+  inputFocused: {
+    borderColor: Colors.primary,
+  },
+  inputError: {
+    borderColor: Colors.alertRed,
+  },
+  inputLabel: {
+    color: Colors.textPrimary,
+    fontSize: Typography.fontSizes.xs,
+    marginBottom: 6,
+  },
+  textSecondary: {
+    color: Colors.textSecondary,
+  },
+
+  errorText: {
+    marginBottom: 2,
+    opacity: 0,
+    color: Colors.alertRed,
+    fontSize: Typography.fontSizes.xs,
+  },
+  errorTextVisible: {
+    opacity: 1,
+  },
+
+  checkboxContainer: {
+    marginTop: 12,
+    justifyContent: "space-between",
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  textIAgree: {
+    marginRight: 32,
+  },
+
+  inputContainer: {
+    width: '100%',
+  },
+  textFieldContainer: {
+    color: Colors.textSecondary,
+    width: '100%',
+  },
+  labelContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
 });

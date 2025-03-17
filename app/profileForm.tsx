@@ -102,16 +102,16 @@ const ProfileForm = observer(() => {
           </View>
         </TouchableOpacity>
 
-        <View style={styles.inputContainer}>
-          <Text style={styles.inputLabel}>
+        <View style={commonStyles.inputContainer}>
+          <Text style={commonStyles.inputLabel}>
             Никнейм
-            <Text style={styles.textSecondary}> (обязательно)</Text>
+            <Text style={commonStyles.textSecondary}> (обязательно)</Text>
           </Text>
           <TextInput
             style={[
               commonStyles.input,
-              isNicknameFocused && { borderColor: Colors.primary },
-              errors.nickname && { borderColor: Colors.alertRed },
+              isNicknameFocused && commonStyles.inputFocused,
+              errors.nickname && commonStyles.inputError,
             ]}
             placeholder="@Создайте никнейм"
             value={nickname}
@@ -122,19 +122,21 @@ const ProfileForm = observer(() => {
             numberOfLines={1}
             placeholderTextColor={Colors.textPlaceholder}
           />
-            <Text style={[styles.errorText, errors.nickname ? styles.errorTextVisible : '']}>Заполните обязательное поле</Text>
+          <Text style={[commonStyles.errorText, errors.nickname && commonStyles.errorTextVisible]}>
+            Заполните обязательное поле
+          </Text>
         </View>
 
-        <View style={styles.inputContainer}>
-          <Text style={styles.inputLabel}>
+        <View style={commonStyles.inputContainer}>
+          <Text style={commonStyles.inputLabel}>
             Имя
-            <Text style={styles.textSecondary}> (обязательно)</Text>
+            <Text style={commonStyles.textSecondary}> (обязательно)</Text>
           </Text>
           <TextInput
             style={[
               commonStyles.input,
-              isNameFocused && { borderColor: Colors.primary },
-              errors.name && { borderColor: Colors.alertRed },
+              isNameFocused && commonStyles.inputFocused,
+              errors.name && commonStyles.inputError,
             ]}
             placeholder="Введите имя"
             value={name}
@@ -145,19 +147,21 @@ const ProfileForm = observer(() => {
             numberOfLines={1}
             placeholderTextColor={Colors.textPlaceholder}
           />
-          <Text style={[styles.errorText, errors.name ? styles.errorTextVisible : '']}>Заполните обязательное поле</Text>
+          <Text style={[commonStyles.errorText, errors.name && commonStyles.errorTextVisible]}>
+            Заполните обязательное поле
+          </Text>
         </View>
 
-        <View style={[styles.inputContainer, styles.textFieldContainer]}>
-          <View style={styles.labelContainer}>
-            <Text style={[styles.inputLabel]}>Описание</Text>
+        <View style={[commonStyles.inputContainer, commonStyles.textFieldContainer]}>
+          <View style={commonStyles.labelContainer}>
+            <Text style={commonStyles.inputLabel}>Описание</Text>
             <Text style={{ color: Colors.textPlaceholder }}>{`${descriptionLength}/${maxDescriptionLength}`}</Text>
           </View>
           <TextInput
             style={[
               commonStyles.input,
               commonStyles.textField,
-              isDescriptionFocused && { borderColor: Colors.primary },
+              isDescriptionFocused && commonStyles.inputFocused,
             ]}
             placeholder="Расскажите о себе"
             value={description}
@@ -171,9 +175,11 @@ const ProfileForm = observer(() => {
           />
         </View>
 
-        <View style={styles.checkboxContainer}>
-          <Text numberOfLines={2} style={styles.textIAgree}>Я согласен с условиями пользовательского соглашения</Text>
-          <Slider onChange={setAgreed}/>
+        <View style={commonStyles.checkboxContainer}>
+          <Text numberOfLines={2} style={commonStyles.textIAgree}>
+            Я согласен с условиями пользовательского соглашения
+          </Text>
+          <Slider onChange={setAgreed} />
         </View>
       </View>
 
@@ -241,41 +247,5 @@ const styles = StyleSheet.create({
     shadowRadius: 25,
     elevation: 10,
   },
-  inputContainer: {
-    width: '100%',
-  },
-  inputLabel: {
-    color: Colors.textPrimary,
-    fontSize: Typography.fontSizes.xs,
-    marginBottom: 6,
-  },
-  textFieldContainer: {
-    color: Colors.textSecondary,
-    width: '100%',
-  },
-  labelContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  textSecondary: {
-    color: Colors.textSecondary,
-  },
-  errorText: {
-    marginBottom: 2,
-    opacity: 0,
-    color: Colors.alertRed,
-    fontSize: Typography.fontSizes.xs,
-  },
-  errorTextVisible: {
-    opacity: 1
-  },
-  checkboxContainer: {
-    marginTop: 12,
-    justifyContent: 'space-between',
-    flexDirection: 'row',
-    alignItems: 'center'
-  },
-  textIAgree: {
-    marginRight: 32
-  }
+  
 });
