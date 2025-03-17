@@ -1,16 +1,16 @@
-import { View, TextInput, TouchableOpacity, Text, StyleSheet, Image } from "react-native";
+import { View, TextInput, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "expo-router";
 import { observer } from "mobx-react-lite";
 import { commonStyles } from "@/styles/CommonStyles";
 import { profileStore } from "../store/profileStore";
-import Checkbox from "expo-checkbox";
 import { Colors } from "@/styles/Colors";
 import { Typography } from "@/styles/Typography";
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import Fontisto from '@expo/vector-icons/Fontisto';
 import Slider from "@/components/interactive/slider";
 import Button from "@/components/interactive/button";
+import * as ImagePicker from "expo-image-picker";
 
 const ProfileForm = observer(() => {
   const router = useRouter();
@@ -46,7 +46,7 @@ const ProfileForm = observer(() => {
     setErrors(newErrors);
 
     if (isFormValid) {
-      profileStore.setProfile({ nickname, name, description });
+      profileStore.setProfile({ nickname, name, description, photoUri: profileStore.photoUri });
       router.push("/");
     }
   };
@@ -65,17 +65,42 @@ const ProfileForm = observer(() => {
     }
   };
 
+  const handleSelectPhoto = async () => {
+    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (status !== "granted") {
+      alert("Для выбора фото необходимо предоставить доступ к галерее.");
+      return;
+    }
+
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      profileStore.setPhotoUri(result.assets[0].uri);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.formContainer}>
         <Text style={styles.profileTitle}>Создать личный профиль</Text>
         <Text style={styles.selectPhoto}>Выберите фото</Text>
-        <View style={styles.photoCotainer}>
-          <FontAwesome5 name="camera" size={24} color={Colors.grey} />
-          <View style={styles.plusIconContainer}>
-            <Fontisto name="plus-a" size={18} color={Colors.alertRed} />
+        <TouchableOpacity onPress={handleSelectPhoto}>
+          <View style={styles.photoCotainer}>
+            {profileStore.photoUri ? (
+              <Image source={{ uri: profileStore.photoUri }} style={styles.photo} />
+            ) : (
+              <FontAwesome5 name="camera" size={24} color={Colors.grey} />
+            )}
+            <View style={styles.plusIconContainer}>
+              <Fontisto name="plus-a" size={18} color={Colors.alertRed} />
+            </View>
           </View>
-        </View>
+        </TouchableOpacity>
 
         <View style={styles.inputContainer}>
           <Text style={styles.inputLabel}>
@@ -197,6 +222,11 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     backgroundColor: Colors.greyDimm,
     marginBottom: 16,
+  },
+  photo: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 100,
   },
   plusIconContainer: {
     position: 'absolute',
