@@ -12,7 +12,6 @@ export const commonStyles = StyleSheet.create({
     fontSize: Typography.fontSizes.m,
     color: Colors.textPrimary,
     backgroundColor: Colors.background,
-    marginBottom: 12,
   },
 
   textField: {
@@ -37,17 +36,5 @@ export const commonStyles = StyleSheet.create({
     color: Colors.background,
     fontSize: Typography.fontSizes.s,
     fontWeight: "bold",
-  },
-
-  checkboxContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 12,
-  },
-
-  checkboxText: {
-    marginLeft: 8,
-    fontSize: Typography.fontSizes.xs,
-    color: Colors.textPrimary,
   },
 });
