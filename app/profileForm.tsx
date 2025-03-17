@@ -192,7 +192,6 @@ const ProfileForm = observer(() => {
         </View>
       </ScrollView>
 
-      {/* Fixed Button at the Bottom */}
       <View style={styles.buttonContainer}>
         <Button
           onPress={handleSubmit}
@@ -276,6 +275,7 @@ const styles = StyleSheet.create({
     color: Colors.textPrimary,
   },
   buttonContainer: {
+    zIndex: 2,
     paddingHorizontal: 16,
     paddingBottom: 24,
     backgroundColor: Colors.background,
