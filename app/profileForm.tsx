@@ -37,6 +37,12 @@ const ProfileForm = observer(() => {
     setDescriptionLength(description?.length ?? 0);
   }, [description]);
 
+  useEffect(() => {
+    if (agreed) {
+      setErrors((prev) => ({ ...prev, agreed: false }));
+    }
+  }, [agreed]);
+
   const isFormValid = nickname.trim() && name.trim() && agreed;
 
   const handleSubmit = () => {
