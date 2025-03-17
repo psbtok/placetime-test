@@ -30,6 +30,7 @@ const ProfileForm = observer(() => {
   const [errors, setErrors] = useState({
     nickname: false,
     name: false,
+    agreed: false,
   });
 
   useEffect(() => {
@@ -42,6 +43,7 @@ const ProfileForm = observer(() => {
     const newErrors = {
       nickname: !nickname.trim(),
       name: !name.trim(),
+      agreed: !agreed,
     };
 
     setErrors(newErrors);
@@ -89,7 +91,6 @@ const ProfileForm = observer(() => {
     <View style={styles.container}>
       <CustomStatusBar backgroundColor={Colors.background} barStyle="dark-content" />
 
-      {/* Scrollable Form Content */}
       <ScrollView
         contentContainerStyle={styles.scrollContainer}
         style={styles.scrollView}
@@ -189,6 +190,9 @@ const ProfileForm = observer(() => {
             </Text>
             <Slider onChange={setAgreed} defaultValue={agreed}/>
           </View>
+          <Text style={[commonStyles.errorText, errors.agreed && commonStyles.errorTextVisible, {paddingHorizontal: 4}]}>
+            Вы должны согласиться
+          </Text>
         </View>
       </ScrollView>
 

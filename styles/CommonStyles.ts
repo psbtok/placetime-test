@@ -55,6 +55,8 @@ export const commonStyles = StyleSheet.create({
   },
 
   errorText: {
+    width: '100%',
+    textAlign: 'left',
     marginBottom: 2,
     opacity: 0,
     color: Colors.alertRed,
