@@ -21,48 +21,52 @@ const ProfileView = observer(() => {
       }
     }, [profileStore.name])
   );
-  
+
   return (
     <View style={styles.container}>
       <CustomStatusBar backgroundColor={Colors.primaryPale} barStyle="dark-content" />
 
-      <View style={styles.acitonsContainer}>
-        <View style={styles.icon}>
-          <FontAwesome name="bell" size={16} color={Colors.primary} />
-        </View>
-        <View style={styles.imageContainer}>
-          {profileStore.photoUri ? (
-            <Image source={{ uri: profileStore.photoUri }} style={styles.image} />
-          ) : (
-            <FontAwesome5 name="camera" size={32} color={Colors.grey} />
-          )}
-        </View>
-        <View style={styles.icon}>
-          <Ionicons name="settings-sharp" size={20} color={Colors.primary} />
-        </View>
-      </View>
-      <View style={styles.nameContainer}>
-        <View style={styles.nameWrapperOuter}>
-          <View style={styles.nameWrapperInner}>
-            <Text style={styles.name}>{profileStore.name}</Text>
-            <Text style={styles.nickname}>@{profileStore.nickname}</Text>
+      <ScrollView
+        contentContainerStyle={styles.scrollContainer}
+        style={styles.scrollView}
+      >
+        <View style={styles.acitonsContainer}>
+          <View style={styles.icon}>
+            <FontAwesome name="bell" size={16} color={Colors.primary} />
+          </View>
+          <View style={styles.imageContainer}>
+            {profileStore.photoUri ? (
+              <Image source={{ uri: profileStore.photoUri }} style={styles.image} />
+            ) : (
+              <FontAwesome5 name="camera" size={32} color={Colors.grey} />
+            )}
+          </View>
+          <View style={styles.icon}>
+            <Ionicons name="settings-sharp" size={20} color={Colors.primary} />
           </View>
         </View>
-      </View>
-      <View style={styles.subscriptionWrapper}>
-        <View style={styles.subscriptionContainer}>
-          <Text style={styles.subscriptionText}><Text style={styles.subscriptionCount}>0</Text> подписчиков</Text>
-          <Text style={styles.subscriptionText}><Text style={styles.subscriptionCount}>0</Text> подписок</Text>
+        <View style={styles.nameContainer}>
+          <View style={styles.nameWrapperOuter}>
+            <View style={styles.nameWrapperInner}>
+              <Text style={styles.name}>{profileStore.name}</Text>
+              <Text style={styles.nickname}>@{profileStore.nickname}</Text>
+            </View>
+          </View>
         </View>
-      </View>
-      {profileStore.description && (
-        <ScrollView style={styles.descriptionScrollContainer}>
+        <View style={styles.subscriptionWrapper}>
+          <View style={styles.subscriptionContainer}>
+            <Text style={styles.subscriptionText}><Text style={styles.subscriptionCount}>0</Text> подписчиков</Text>
+            <Text style={styles.subscriptionText}><Text style={styles.subscriptionCount}>0</Text> подписок</Text>
+          </View>
+        </View>
+        {profileStore.description && (
           <View style={styles.descriptionContainer}>
             <Text style={styles.descriptionLabel}>Описание</Text>
             <Text style={styles.description}>{profileStore.description}</Text>
           </View>
-        </ScrollView>
-      )}
+        )}
+      </ScrollView>
+
       <View style={styles.buttonContainer}>
         <Button
           onPress={() => router.push("/profileForm")}
@@ -77,11 +81,15 @@ export default ProfileView;
 
 const styles = StyleSheet.create({
   container: {
-    flexGrow: 1,
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
+    flex: 1,
     backgroundColor: Colors.background,
+  },
+  scrollView: {
+    flex: 1,
+  },
+  scrollContainer: {
+    flexGrow: 1,
+    paddingBottom: 100,
   },
   acitonsContainer: {
     width: '100%',
@@ -175,10 +183,9 @@ const styles = StyleSheet.create({
     width: '100%',
     paddingHorizontal: 16,
     paddingBottom: 24,
-  },
-  descriptionScrollContainer: {
-    flex: 1,
-    width: '100%',
+    position: 'absolute',
+    bottom: 0,
+    backgroundColor: Colors.background,
   },
   descriptionContainer: {
     marginTop: 36,
