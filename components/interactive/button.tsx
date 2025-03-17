@@ -9,7 +9,7 @@ interface ButtonProps {
   text: string;
 }
 
-const Button: React.FC<ButtonProps> = ({ onPress, disabled, text }) => {
+const Button = ({ onPress, disabled = false, text }: ButtonProps) => {
   const [isPressed, setIsPressed] = useState(false);
 
   const handlePressIn = () => {

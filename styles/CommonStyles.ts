@@ -20,6 +20,7 @@ export const commonStyles = StyleSheet.create({
   },
 
   button: {
+    width: '100%',
     backgroundColor: Colors.primary,
     paddingVertical: 14,
     borderRadius: 16,

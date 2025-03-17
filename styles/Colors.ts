@@ -14,7 +14,7 @@ export const Colors = {
     greyDimm: 'hsla(240, 40%, 98%, 1)',
     grey: 'hsla(221, 27%, 67%, 1)',
     greyBorder: 'hsla(0, 0%, 75%, 1)',
-
+    greyBorderDimm: 'hsla(0, 0%, 92%, 1)',
 
     shadow: "hsla(221, 24%, 33%, 1)"
 }

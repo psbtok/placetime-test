@@ -31,7 +31,7 @@ const Slider = ({ onChange, defaultValue = false }: SliderProps) => {
 
   const pillBackgroundColor = animation.interpolate({
     inputRange: [0, 1],
-    outputRange: ['hsla(0, 0%, 92%, 1)', Colors.primary],
+    outputRange: [Colors.greyBorderDimm, Colors.primary],
   });
 
   return (
