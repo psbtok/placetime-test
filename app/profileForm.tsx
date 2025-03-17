@@ -1,4 +1,4 @@
-import { View, TextInput, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { View, TextInput, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "expo-router";
 import { observer } from "mobx-react-lite";
@@ -11,6 +11,7 @@ import Fontisto from '@expo/vector-icons/Fontisto';
 import Slider from "@/components/interactive/slider";
 import Button from "@/components/interactive/button";
 import * as ImagePicker from "expo-image-picker";
+import CustomStatusBar from "@/components/nonInteractive/customStatusBar";
 
 const ProfileForm = observer(() => {
   const router = useRouter();
@@ -86,108 +87,119 @@ const ProfileForm = observer(() => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.formContainer}>
-        <Text style={styles.profileTitle}>Создать личный профиль</Text>
-        <Text style={styles.selectPhoto}>Выберите фото</Text>
-        <TouchableOpacity onPress={handleSelectPhoto}>
-          <View style={styles.photoCotainer}>
-            {profileStore.photoUri ? (
-              <Image source={{ uri: profileStore.photoUri }} style={styles.photo} />
-            ) : (
-              <FontAwesome5 name="camera" size={24} color={Colors.grey} />
-            )}
-            <View style={styles.plusIconContainer}>
-              <Fontisto name="plus-a" size={18} color={Colors.alertRed} />
+      <CustomStatusBar backgroundColor={Colors.background} barStyle="dark-content" />
+
+      {/* Scrollable Form Content */}
+      <ScrollView
+        contentContainerStyle={styles.scrollContainer}
+        style={styles.scrollView}
+      >
+        <View style={styles.formContainer}>
+          <Text style={styles.profileTitle}>Создать личный профиль</Text>
+          <Text style={styles.selectPhoto}>Выберите фото</Text>
+          <TouchableOpacity onPress={handleSelectPhoto}>
+            <View style={styles.photoCotainer}>
+              {profileStore.photoUri ? (
+                <Image source={{ uri: profileStore.photoUri }} style={styles.photo} />
+              ) : (
+                <FontAwesome5 name="camera" size={24} color={Colors.grey} />
+              )}
+              <View style={styles.plusIconContainer}>
+                <Fontisto name="plus-a" size={18} color={Colors.alertRed} />
+              </View>
             </View>
+          </TouchableOpacity>
+
+          <View style={commonStyles.inputContainer}>
+            <Text style={commonStyles.inputLabel}>
+              Никнейм
+              <Text style={commonStyles.textSecondary}> (обязательно)</Text>
+            </Text>
+            <TextInput
+              style={[
+                commonStyles.input,
+                isNicknameFocused && commonStyles.inputFocused,
+                errors.nickname && commonStyles.inputError,
+              ]}
+              placeholder="@Создайте никнейм"
+              value={nickname}
+              onChangeText={handleNicknameChange}
+              onFocus={() => setIsNicknameFocused(true)}
+              onBlur={() => setIsNicknameFocused(false)}
+              maxLength={30}
+              numberOfLines={1}
+              placeholderTextColor={Colors.textPlaceholder}
+            />
+            <Text style={[commonStyles.errorText, errors.nickname && commonStyles.errorTextVisible]}>
+              Заполните обязательное поле
+            </Text>
           </View>
-        </TouchableOpacity>
 
-        <View style={commonStyles.inputContainer}>
-          <Text style={commonStyles.inputLabel}>
-            Никнейм
-            <Text style={commonStyles.textSecondary}> (обязательно)</Text>
-          </Text>
-          <TextInput
-            style={[
-              commonStyles.input,
-              isNicknameFocused && commonStyles.inputFocused,
-              errors.nickname && commonStyles.inputError,
-            ]}
-            placeholder="@Создайте никнейм"
-            value={nickname}
-            onChangeText={handleNicknameChange}
-            onFocus={() => setIsNicknameFocused(true)}
-            onBlur={() => setIsNicknameFocused(false)}
-            maxLength={600}
-            numberOfLines={1}
-            placeholderTextColor={Colors.textPlaceholder}
-          />
-          <Text style={[commonStyles.errorText, errors.nickname && commonStyles.errorTextVisible]}>
-            Заполните обязательное поле
-          </Text>
-        </View>
-
-        <View style={commonStyles.inputContainer}>
-          <Text style={commonStyles.inputLabel}>
-            Имя
-            <Text style={commonStyles.textSecondary}> (обязательно)</Text>
-          </Text>
-          <TextInput
-            style={[
-              commonStyles.input,
-              isNameFocused && commonStyles.inputFocused,
-              errors.name && commonStyles.inputError,
-            ]}
-            placeholder="Введите имя"
-            value={name}
-            onChangeText={handleNameChange}
-            onFocus={() => setIsNameFocused(true)}
-            onBlur={() => setIsNameFocused(false)}
-            maxLength={100}
-            numberOfLines={1}
-            placeholderTextColor={Colors.textPlaceholder}
-          />
-          <Text style={[commonStyles.errorText, errors.name && commonStyles.errorTextVisible]}>
-            Заполните обязательное поле
-          </Text>
-        </View>
-
-        <View style={[commonStyles.inputContainer, commonStyles.textFieldContainer]}>
-          <View style={commonStyles.labelContainer}>
-            <Text style={commonStyles.inputLabel}>Описание</Text>
-            <Text style={{ color: Colors.textPlaceholder }}>{`${descriptionLength}/${maxDescriptionLength}`}</Text>
+          <View style={commonStyles.inputContainer}>
+            <Text style={commonStyles.inputLabel}>
+              Имя
+              <Text style={commonStyles.textSecondary}> (обязательно)</Text>
+            </Text>
+            <TextInput
+              style={[
+                commonStyles.input,
+                isNameFocused && commonStyles.inputFocused,
+                errors.name && commonStyles.inputError,
+              ]}
+              placeholder="Введите имя"
+              value={name}
+              onChangeText={handleNameChange}
+              onFocus={() => setIsNameFocused(true)}
+              onBlur={() => setIsNameFocused(false)}
+              maxLength={30}
+              numberOfLines={1}
+              placeholderTextColor={Colors.textPlaceholder}
+            />
+            <Text style={[commonStyles.errorText, errors.name && commonStyles.errorTextVisible]}>
+              Заполните обязательное поле
+            </Text>
           </View>
-          <TextInput
-            style={[
-              commonStyles.input,
-              commonStyles.textField,
-              isDescriptionFocused && commonStyles.inputFocused,
-            ]}
-            placeholder="Расскажите о себе"
-            value={description}
-            numberOfLines={5}
-            multiline={true}
-            maxLength={600}
-            onChangeText={setDescription}
-            onFocus={() => setIsDescriptionFocused(true)}
-            onBlur={() => setIsDescriptionFocused(false)}
-            placeholderTextColor={Colors.textSecondary}
-          />
-        </View>
 
-        <View style={commonStyles.checkboxContainer}>
-          <Text numberOfLines={2} style={commonStyles.textIAgree}>
-            Я согласен с условиями пользовательского соглашения
-          </Text>
-          <Slider onChange={setAgreed} defaultValue={agreed}/>
+          <View style={[commonStyles.inputContainer, commonStyles.textFieldContainer]}>
+            <View style={commonStyles.labelContainer}>
+              <Text style={commonStyles.inputLabel}>Описание</Text>
+              <Text style={{ color: Colors.textPlaceholder }}>{`${descriptionLength}/${maxDescriptionLength}`}</Text>
+            </View>
+            <TextInput
+              style={[
+                commonStyles.input,
+                commonStyles.textField,
+                isDescriptionFocused && commonStyles.inputFocused,
+              ]}
+              placeholder="Расскажите о себе"
+              value={description}
+              numberOfLines={5}
+              multiline={true}
+              maxLength={600}
+              onChangeText={setDescription}
+              onFocus={() => setIsDescriptionFocused(true)}
+              onBlur={() => setIsDescriptionFocused(false)}
+              placeholderTextColor={Colors.textSecondary}
+            />
+          </View>
+
+          <View style={styles.checkboxContainer}>
+            <Text numberOfLines={2} style={styles.textIAgree}>
+              Я согласен с условиями пользовательского соглашения
+            </Text>
+            <Slider onChange={setAgreed} defaultValue={agreed}/>
+          </View>
         </View>
+      </ScrollView>
+
+      {/* Fixed Button at the Bottom */}
+      <View style={styles.buttonContainer}>
+        <Button
+          onPress={handleSubmit}
+          disabled={!isFormValid}
+          text="Продолжить"
+        />
       </View>
-
-      <Button
-        onPress={handleSubmit}
-        disabled={!isFormValid}
-        text="Продолжить"
-      />
     </View>
   );
 });
@@ -196,10 +208,13 @@ export default ProfileForm;
 
 const styles = StyleSheet.create({
   container: {
-    flexGrow: 1,
-    flexDirection: 'column',
-    justifyContent: 'space-between',
+    flex: 1,
     backgroundColor: Colors.background,
+  },
+  scrollView: {
+    flex: 1,
+  },
+  scrollContainer: {
     paddingHorizontal: 16,
     paddingBottom: 24,
   },
@@ -247,5 +262,22 @@ const styles = StyleSheet.create({
     shadowRadius: 25,
     elevation: 10,
   },
-  
+  checkboxContainer: {
+    marginTop: 12,
+    width: '100%',
+    padding: 4,
+    justifyContent: "space-between",
+    flexDirection: "row",
+    gap: 16,
+    alignItems: "center",
+  },
+  textIAgree: {
+    flex: 1,
+    color: Colors.textPrimary,
+  },
+  buttonContainer: {
+    paddingHorizontal: 16,
+    paddingBottom: 24,
+    backgroundColor: Colors.background,
+  },
 });

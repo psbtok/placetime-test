@@ -1,5 +1,5 @@
 import { View, Text, Image, StyleSheet, ScrollView } from "react-native";
-import { useRouter } from "expo-router";
+import { useFocusEffect, useRouter } from "expo-router";
 import { observer } from "mobx-react-lite";
 import { profileStore } from "@/store/profileStore";
 import { Colors } from "@/styles/Colors";
@@ -9,10 +9,19 @@ import { Typography } from "@/styles/Typography";
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import Button from "@/components/interactive/button";
+import { useCallback } from "react";
 
 const ProfileView = observer(() => {
   const router = useRouter();
 
+  useFocusEffect(
+    useCallback(() => {
+      if (!profileStore.name) {
+        router.replace("/profileForm");
+      }
+    }, [profileStore.name])
+  );
+  
   return (
     <View style={styles.container}>
       <CustomStatusBar backgroundColor={Colors.primaryPale} barStyle="dark-content" />
@@ -25,7 +34,7 @@ const ProfileView = observer(() => {
           {profileStore.photoUri ? (
             <Image source={{ uri: profileStore.photoUri }} style={styles.image} />
           ) : (
-            <FontAwesome5 name="user" size={48} color={Colors.grey} />
+            <FontAwesome5 name="camera" size={32} color={Colors.grey} />
           )}
         </View>
         <View style={styles.icon}>
@@ -122,11 +131,12 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 24,
   },
   nameWrapperInner: {
-    width: '60%',
+    minWidth: '60%',
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 24,
     padding: 12,
+    paddingHorizontal: 20,
     bottom: '50%',
     backgroundColor: Colors.primaryPale,
   },

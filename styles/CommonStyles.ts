@@ -64,16 +64,6 @@ export const commonStyles = StyleSheet.create({
     opacity: 1,
   },
 
-  checkboxContainer: {
-    marginTop: 12,
-    justifyContent: "space-between",
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  textIAgree: {
-    marginRight: 32,
-  },
-
   inputContainer: {
     width: '100%',
   },
