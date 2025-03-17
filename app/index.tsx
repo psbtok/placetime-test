@@ -198,6 +198,7 @@ const styles = StyleSheet.create({
     fontSize: Typography.fontSizes.l,
   },
   description: {
+    color: 'hsla(276, 12%, 8%, 1)',
     marginTop: 12,
     fontSize: Typography.fontSizes.l,
   },
