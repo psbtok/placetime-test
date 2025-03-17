@@ -4,11 +4,12 @@ import { Colors } from "@/styles/Colors";
 
 interface SliderProps {
   onChange?: (isActive: boolean) => void;
+  defaultValue?: boolean;
 }
 
-const Slider: React.FC<SliderProps> = ({ onChange }) => {
-  const [isActive, setIsActive] = useState(false);
-  const [animation] = useState(new Animated.Value(0));
+const Slider = ({ onChange, defaultValue = false }: SliderProps) => {
+  const [isActive, setIsActive] = useState(defaultValue);
+  const [animation] = useState(new Animated.Value(defaultValue ? 1 : 0));
 
   const toggleSlider = () => {
     const toValue = isActive ? 0 : 1;

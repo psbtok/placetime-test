@@ -19,7 +19,7 @@ const ProfileForm = observer(() => {
   const [nickname, setNickname] = useState(profileStore.nickname);
   const [name, setName] = useState(profileStore.name);
   const [description, setDescription] = useState(profileStore.description);
-  const [agreed, setAgreed] = useState(true);
+  const [agreed, setAgreed] = useState(profileStore.name ? true : false);
   const [descriptionLength, setDescriptionLength] = useState(description?.length ?? 0);
 
   const [isNicknameFocused, setIsNicknameFocused] = useState(false);
@@ -179,7 +179,7 @@ const ProfileForm = observer(() => {
           <Text numberOfLines={2} style={commonStyles.textIAgree}>
             Я согласен с условиями пользовательского соглашения
           </Text>
-          <Slider onChange={setAgreed} />
+          <Slider onChange={setAgreed} defaultValue={agreed}/>
         </View>
       </View>
 
