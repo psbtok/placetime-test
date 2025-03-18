@@ -43,12 +43,12 @@ const ProfileForm = observer(() => {
     }
   }, [agreed]);
 
-  const isFormValid = nickname.trim() && name.trim() && agreed;
+  const isFormValid = nickname?.trim() && name?.trim() && agreed;
 
   const handleSubmit = () => {
     const newErrors = {
-      nickname: !nickname.trim(),
-      name: !name.trim(),
+      nickname: !nickname?.trim(),
+      name: !name?.trim(),
       agreed: !agreed,
     };
 
